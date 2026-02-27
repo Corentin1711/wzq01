@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏网站</title>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #f5f5f5;
+            padding: 70px;
+            /* 默认隐藏页面内容，验证通过后显示 */
+            display: none;
+        }
+
+        /* 密码验证失败提示样式 */
+        .error-tip {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: red;
+            text-align: center;
+        }
+
+        /* 标题样式 */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        /* 图标容器 */
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* 单个图标样式 - 新增相对定位，用于提示框定位 */
+        .icon-wrapper {
+            position: relative;
+        }
+        .icon-item {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 20px 7px rgba(0,0,0,0.1);
+            transition: transform 0.35s ease;
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* 鼠标悬停效果 */
+        .icon-item:hover {
+            transform: translateY(-15px);
+        }
+
+        /* 图标样式 */
+        .icon-item i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        /* 我的世界图标特殊颜色 */
+        .icon-item.mc i {
+            color: #4CAF50;
+        }
+
+        /* 文字样式 */
+        .icon-text {
+            font-size: 15px;
+            text-align: center;
+        }
+
+        /* 空白图标样式 */
+        .icon-item.empty {
+            opacity: 0.7;
+        }
+
+        /* 核心：游戏玩法提示框样式 */
+        .game-tips {
+            /* 默认隐藏提示框 */
+            display: none;
+            /* 绝对定位，相对于父元素icon-wrapper */
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            /* 提示框样式 */
+            width: 200px;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.4;
+            /* 防止提示框被遮挡 */
+            z-index: 999;
+            /* 提示框小三角 */
+        }
+        .game-tips::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid #333;
+        }
+
+        /* 鼠标悬停时显示提示框 */
+        .icon-wrapper:hover .game-tips {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面标题 -->
+    <h1>游戏网站</h1>
+
+    <!-- 图标容器 -->
+    <div class="icon-container">
+        <!-- 第一个图标：我的世界（跳转链接）- 新增提示框 -->
+        <div class="icon-wrapper">
+            <a href="https://ltcat.lanzouv.com/b0aj6gsid" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">我的世界<br>点击下载<br>PCL2</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                我的世界PCL2 下载: <br>
+                1. 密码为: pcl2<br>
+                2. 选择: PCL 正式版 2.12.2.zip<br>
+                3. 选择: 普通下载<br>
+            </div>
+        </div>
+
+        <!-- 第二个图标 -->
+        <div class="icon-wrapper">
+            <a href="https://vochantia.netlify.app/web/webapps/singleplayers" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">我的世界<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                我的世界网页版: <br>
+                1. 加载即玩<br>
+                2. 版本有点老
+            </div>
+        </div>
+
+        <!-- 第三个图标 -->
+        <div class="icon-wrapper">
+            <a href="https://poki.com/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">poki小游戏<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                Poki：<br>
+                1. 上学时的摸鱼圣地，高质量游戏点开即玩。<br>
+                2. 有点卡
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://sq.dl999.cn/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">某音小游戏<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                某音:<br>
+                1. 热门小程序游戏网页版，彻底告别广告！
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://www.crazygames.com/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">Crazy小游戏<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                Crazy: <br>
+                1.支持全球玩家实时PK的在线游戏库。
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://slowroads.io/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">slow开车模拟器<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                slow roads：<br>
+                1. 来一场没有终点的治愈系公路旅行。
+            </div>
+        </div>
+
+        <div class="icon-wrapper">
+            <a href="https://www.yikm.net/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">小霸王小游戏<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                小霸王：<br>
+                1.一秒穿越回童年<br>
+                2.重温魂斗罗、超级玛丽等
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://play-cs.com/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">C.S1.6小游戏<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                在线版CS1.6：<br>
+                1. 浏览器直接和全球玩家联机对战。
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://fn.heheda.top/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">水果忍者<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                水果忍者: <br>
+                1.随时随地拔“刀”开切，释放所有压力。
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="http://slither.com/io" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">贪吃蛇<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                贪吃蛇：<br>
+                1.你的对手不再是墙壁，而是真人玩家！
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://game.hullqin.cn/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">桌游合集<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                桌游合集：<br>
+                1.任意桌游在线连接<br>
+                2.朋友聚会神器，甩个链接就能在线开黑。
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://www.meu666.com/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">meu666小游戏<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                meu666：<br>
+                1.口袋里的游戏模拟器，500款经典街机回忆杀。
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://www.yikm.net/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">小霸王小游戏<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                小霸王小游戏：<br>
+                1.一秒穿越回童年<br>
+                2.重温魂斗罗、超级玛丽等
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://www.yikm.net/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">小霸王小游戏<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                小霸王小游戏：<br>
+                1.一秒穿越回童年<br>
+                2.重温魂斗罗、超级玛丽等
+            </div>
+        </div>
+        <div class="icon-wrapper">
+            <a href="https://www.yikm.net/" target="_blank" class="icon-item mc">
+                <i class="fas fa-gamepad"></i>
+                <span class="icon-text">小霸王小游戏<br>点击跳转</span>
+            </a>
+            <!-- 游戏玩法提示框 -->
+            <div class="game-tips">
+                小霸王小游戏：<br>
+                1.一秒穿越回童年<br>
+                2.重温魂斗罗、超级玛丽等
+            </div>
+        </div>
+        <!-- 最后一个空白图标 -->
+        <div class="icon-wrapper">
+            <div class="icon-item empty">
+                <i class="fas fa-question-circle"></i>
+                <span class="icon-text">空白图标</span>
+            </div>
+            <div class="game-tips">暂未添加游戏玩法</div>
+        </div>
+    </div>
+
+    <!-- 密码验证核心JS -->
+    <script>
+        // 定义正确密码
+        const correctPassword = "青云19班牛逼";
+        // 最多验证次数（防止无限尝试）
+        const maxAttempts = 3;
+        let attempts = 0;
+
+        // 密码验证函数
+        function verifyPassword() {
+            // 弹出密码输入框
+            const inputPassword = prompt("请输入访问密码：", "");
+            
+            // 判断是否取消输入
+            if (inputPassword === null) {
+                document.body.innerHTML = '<div class="error-tip">你取消了密码输入，无法访问页面！</div>';
+                return false;
+            }
+
+            attempts++; // 尝试次数+1
+
+            // 验证密码是否正确
+            if (inputPassword === correctPassword) {
+                // 密码正确，显示页面内容
+                document.body.style.display = "block";
+                alert("密码正确，欢迎访问！");
+                return true;
+            } else {
+                // 密码错误
+                const remainingAttempts = maxAttempts - attempts;
+                if (remainingAttempts > 0) {
+                    alert(`密码错误！你还有 ${remainingAttempts} 次尝试机会。`);
+                    return verifyPassword(); // 继续验证
+                } else {
+                    // 尝试次数用完，禁止访问
+                    document.body.innerHTML = '<div class="error-tip">尝试次数过多，禁止访问！</div>';
+                    return false;
+                }
+            }
+        }
+
+        // 页面加载后立即执行密码验证
+        window.onload = function() {
+            verifyPassword();
+        };
+    </script>
+</body>
+</html>
